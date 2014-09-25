@@ -19,7 +19,7 @@ function build_ffmpeg {
 
   # patch the configure script to use an Android-friendly versioning scheme
   patch -u configure ${patch_root}/ffmpeg-configure.patch >> ${build_log} 2>&1 || \
-    die "Couldn't patch ffmpeg configure script!"
+    echo "WARNING: Couldn't patch ffmpeg configure script!"
 
   # run the configure script
   prefix=${src_root}/ffmpeg/android/arm
@@ -35,6 +35,10 @@ function build_ffmpeg {
     --disable-ffprobe \
     --disable-ffserver \
     --disable-symver \
+    --disable-avdevice \
+    --enable-libx264 \
+    --enable-nonfree \
+    --enable-gpl \
     --cross-prefix=${TOOLCHAIN}/bin/arm-linux-androideabi- \
     --target-os=linux \
     --arch=arm \
